@@ -1,0 +1,58 @@
+1. What conclusion can you reach about the responses to this question?
+1) the most used phrase is “minutes before class”
+2) most do not have a second monitor connected to their computer
+3) most do not have an external keyboard and mouse
+4) only 1 uses pen and paper, the rest is other
+5) most topics we want to talk about is data, python, data analytics
+2. Is the default summary or visualization helpful? How could it be improved?
+1) summary of the visualization makes it easier to see what is the most common word
+2) I feel like this could be a bar chart, but it does visualize the percentages good
+3) this could be a bar chart too and it does visualize the percentages
+4) this could be a bar chart too and it does visualize the percentages
+5) like the first one, the most used words are in bold and/or bigger than words used less
+
+3. For questions with an “Other” option, where can you find the actual text of those
+responses? Do you notice anything that might be tricky about analyzing these?
+1) NA
+2) this might be tricky because we do not know what the “other” is referring to
+3) this might be tricky because we do not know what the “other” is referring to
+4) this might be tricky because we do not know what the “other” is referring to
+5) NA
+
+4. For questions calling for a written response, what challenges do you notice about
+finding trends or patterns in the answers provided?
+1) most words used were “review”, “sure”, “material”, “device is ready”, 
+minutes before class”
+2) NA
+3) NA
+4) NA
+5) “data” was used most and “AI” and “analyst become confident”
+
+5. Now that you can see the responses, how might you recommend rephrasing this or
+question or the response options in a future survey?
+1) all good. NA
+2) all good. NA
+3) all good. NA
+4) all good. NA 
+5) all good. NA
+
+Next respond to the below questions:
+6. Is there anything that surprised you about the survey responses?
+1) no
+2) no
+3) no
+4) no
+5) no
+
+7. Looking at the responses to questions 1 and 5, are there any ideas you might try to
+include in your morning routine, or any questions that you are also curious about?
+I would ask who ensures they go over material from the night before and ensure they are well hydrated before class
+
+8. Pretend you are the instructor. Is there anything you can learn from this survey to help
+in how you approach teaching this class?
+No
+
+9. Again, pretend you are the instructor. Do you think it was helpful or not helpful to
+make this survey anonymous? Why or why not? (If you can see both pros and cons,
+you may include both.)
+	I think non anon would be best because we can see who is talking about what and we can compare to others

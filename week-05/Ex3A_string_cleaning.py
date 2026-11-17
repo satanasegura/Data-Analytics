@@ -16,6 +16,8 @@ sal1_clean = salary_1.replace("$", "")
 sal2_clean = salary_2.replace("$", "")
 print(sal1_clean) 
 print(sal2_clean)
+print(type(sal1_clean))
 
 result = int(salary_1.replace("$", "").replace(",", ""))
 print(result)
+print(type(result))

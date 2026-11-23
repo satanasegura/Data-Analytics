@@ -1,0 +1,238 @@
+Week 2: SQL Data Fundamentals
+Module 1: Introduction to Relational Databases and SQL
+Databases & Operations (CRUD):
+A database is an organized collection of data supporting applications or websites. Modern databases require capacity, security/auditing, multiuser accessibility, searchability, scalability, and user-friendliness.
+Client-Server Model: Databases reside on a central server (enforcing security and integrity), while client applications on user computers connect to read and write data.
+CRUD Operations: The four basic data operations are Create (add), Read (retrieve), Update (change), and Delete.
+DBMS & Relational Concepts:
+DBMS Categories: Relational (RDBMS) databases use SQL and related tables (e.g., MySQL, SQL Server, PostgreSQL). NoSQL databases include graph databases (nodes/relationships) and document databases (JSON/XML).
+Database Components:
+Schema: The overall blueprint defining tables, columns, relationships, views, and procedures.
+Tables: Store data for a single entity type (e.g., Customers, Orders).
+Rows (Records/Entries): Represent a single instance of data; identified by a primary key rather than a fixed row number.
+Columns (Fields/Attributes): Define a category of data with a specific name, data type, and NULL status.
+Primary Key (PK): A column (or set of columns) that uniquely identifies each row in a table.
+Foreign Key (FK): A column in one table referencing the primary key of another table to establish a relationship.
+Views: Saved queries ("virtual tables") that dynamically pull data from base tables to simplify complex queries, restrict data access, or format output.
+SQL Language Basics:
+SQL Categories:
+DDL (Data Definition Language): Defines database objects (CREATE, ALTER, DROP).
+DML (Data Manipulation Language): Retrieves and modifies records (SELECT, INSERT, UPDATE, DELETE).
+DCL (Data Control Language): Manages permissions (GRANT, DENY, REVOKE).
+Syntax & Rules:
+Statements consist of keywords (SELECT), identifiers (table/column names), literals ('text', 42), and operators (=, +).
+SQL keywords are case-insensitive (uppercase is conventional), whitespace is ignored, and statements end with a semicolon (;).
+Strings use single or double quotes ('hello'), dates use 'YYYY-MM-DD', and numbers use no quotes. Identifiers with spaces in MySQL require backticks (`Order Details`).
+Comments: Single-line comments start with -- or #; multi-line comments use /* ... */.
+MySQL Workbench:
+Key workspace panels include Navigator (Administration and Schemas tabs), Information (Object Info and Session details), Query Editor (write/run scripts), Result Grid (view/filter/export data), and Output (execution messages/durations).
+Execute queries via toolbar lightning bolt icons or shortcuts: Ctrl+Shift+Enter (all/selected) and Ctrl+Enter (statement under cursor).
+Module 2: Relational Database Design
+Normalization:
+The process of organizing data into related tables to eliminate redundancy and ensure data integrity. Breaking rules intentionally for performance is denormalization (e.g., collapsing 1:1 tables or storing pre-calculated values in data warehouses).
+First Normal Form (1NF): Each cell must hold a single discrete value (no comma-separated lists), every row must have a unique identifier (PK), and there must be no repeating column groups (e.g., Item1, Item2).
+Second Normal Form (2NF): Must satisfy 1NF; every non-key column must depend on the entire primary key (eliminating partial dependencies in composite keys), and tables should not mix distinct entities ("franken-entities").
+Third Normal Form (3NF): Must satisfy 2NF; every non-key column must depend only on the primary key (eliminating transitive dependencies, such as publisher details inside a product table, and removing calculated columns).
+Database Design Process:
+Conceptual Model: Gather business requirements and identify high-level entities (nouns).
+Logical Model: Define entities, attributes, primary keys, normalization, and relationships (documented via Entity Relationship Diagrams / ERDs).
+Physical Model: Translate entities into RDBMS-specific tables, columns, data types, constraints, and storage files (data files + transaction log files).
+Implementation: Build the database using SQL DDL (CREATE) scripts.
+Relationships:
+Cardinality: One-to-many (most common), one-to-one, and many-to-many. Many-to-many relationships must be resolved using an intermediate associative/resolving/bridge table containing foreign keys to both tables.
+Existence: Determines whether a related record is mandatory ([1,1], [1,n]) or optional ([0,1], [0,n]).
+Module 3: Working with Tables
+Keys & Relationships:
+Primary Key Types: Surrogate (system-generated auto-increment ID), Natural (inherent unique data like SSN), and Composite (multiple columns combined).
+Foreign Keys: Enforce referential integrity—a value cannot be added to a child FK column unless it already exists in the parent PK column.
+Recursive Relationships: A table's foreign key references its own primary key (e.g., ReportsTo referencing EmployeeID).
+Column Data Types (MySQL):
+Strings: CHAR(n) (fixed-length, space-padded), VARCHAR(n) (variable-length, preferred), TEXT (long text), ENUM/SET (predefined lists), and BLOB/BINARY (files/images).
+Exact Numerics: INT/INTEGER (4 bytes; plus TINYINT, SMALLINT, MEDIUMINT, BIGINT), and DECIMAL(precision, scale) (exact decimals for currency, e.g., DECIMAL(5,2) holds up to 999.99).
+Approximate Numerics: FLOAT (4 bytes, ~6–7 significant digits) and DOUBLE (8 bytes, ~14–15 significant digits) store scientific-notation approximations and can cause rounding discrepancies.
+Boolean: BOOLEAN stores TRUE (1), FALSE (0), or NULL.
+Datetime: DATE (YYYY-MM-DD), TIME (HH:MM:SS), TIMESTAMP (UTC-based with time zone conversion, ideal for transactions), DATETIME (literal date/time without time zone conversion), and YEAR.
+Unique Identifiers: AUTO_INCREMENT for sequential integers, or VARCHAR(36) with UUID() for 36-character hexadecimal UUIDs.
+NULL Values: Represent missing/unknown data (distinct from 0 or ''). Evaluated with IS NULL / IS NOT NULL and handled in math via COALESCE(col, 0).
+DDL Table & Constraint Statements:
+CREATE TABLE: Defines table name, columns, data types, and constraints.
+ALTER TABLE: Modifies tables using ADD, DROP, MODIFY COLUMN, or ADD CONSTRAINT.
+DROP TABLE / CREATE TEMPORARY TABLE: Permanently deletes a table or creates a session-only table.
+Constraints: PRIMARY KEY, FOREIGN KEY ... REFERENCES, NOT NULL, DEFAULT, UNIQUE (candidate keys), and CHECK (condition).
+Referential Actions (ON DELETE / ON UPDATE): CASCADE (propagates change/delete to child), SET NULL, SET DEFAULT, and RESTRICT (blocks parent change/delete if child exists).
+Module 4: Working with Records
+DML Statements:
+INSERT INTO table (col1, col2) VALUES (val1, val2); adds new rows.
+UPDATE table SET col1 = val1 WHERE condition; modifies existing rows. (MySQL's SQL_SAFE_UPDATES blocks updates without a PK in WHERE unless disabled).
+DELETE FROM table WHERE condition; removes rows. Many organizations use soft deletes (Active = FALSE) to preserve referential integrity.
+SELECT col1, col2 FROM table WHERE condition; retrieves records. Always include a WHERE clause on UPDATE and DELETE to avoid modifying/deleting every row.
+Error Handling & Transactions:
+Distinguish between syntax errors (invalid SQL structure) and logic errors (valid SQL producing wrong data).
+Always test UPDATE/DELETE criteria with a SELECT query first.
+Transactions: Wrap changes in BEGIN;, inspect results, and execute COMMIT; to save or ROLLBACK; to undo.
+Batch Import/Export: MySQL Workbench provides the Table Data Import Wizard and Table Data Export Wizard for .csv and .json files.
+Week 3: Continuing SQL
+Module 1: Querying Data
+Aliases & Filtering:
+Aliases (AS): Assign temporary readable names to columns or tables (SELECT col AS alias).
+Comparison & Logical Operators: =, <>/!=, <, <=, >, >=, <=> (NULL-safe equal), AND, OR, NOT, and XOR. Use parentheses to control precedence.
+Range & Set Operators: IN (val1, val2) (shorthand for multiple ORs), BETWEEN val1 AND val2 (inclusive range), IS NULL / IS NOT NULL.
+Pattern Matching (LIKE): Uses % (zero or more characters) and _ (single character). Escape apostrophes in strings by doubling them ('O''Meara').
+Date Filtering: Use YEAR(), MONTH(), DAY(), or date ranges to avoid midnight (00:00:00) timestamp truncation issues.
+Query Modifiers & Expressions:
+ORDER BY col1 ASC|DESC, col2 ASC|DESC: Sorts results (leftmost column takes precedence).
+LIMIT n: Caps returned rows (vendor equivalents: TOP in SQL Server, FETCH).
+DISTINCT: Removes duplicate rows (SELECT DISTINCT col or COUNT(DISTINCT col)).
+Calculated Fields & Concatenation: Perform math directly in SELECT (qty * price AS total) or join strings with CONCAT() (casting non-strings via CAST()).
+Module 2: Querying Multiple Tables
+Joins:
+Combine columns from related tables using ON table1.col = table2.col or USING (shared_col). Qualify ambiguous column names with table names or aliases (c.cust_id).
+INNER JOIN: Returns only rows with matches in both tables.
+LEFT (OUTER) JOIN: Returns all rows from the left table and matching rows from the right (unmatched right columns become NULL).
+RIGHT (OUTER) JOIN: Returns all rows from the right table and matching rows from the left.
+FULL (OUTER) JOIN: Returns all rows from both tables (emulated in MySQL via LEFT JOIN ... UNION SELECT ... RIGHT JOIN).
+Self-Joins: Joining a table to itself using distinct aliases to query recursive relationships.
+Views:
+Created with CREATE VIEW name AS SELECT ...;, updated via CREATE OR REPLACE VIEW, and removed with DROP VIEW. Views are primarily read-only and re-run their underlying query each time they are accessed.
+Module 3: Writing Complex Queries
+Aggregate Functions & Grouping:
+Functions: COUNT(*), COUNT(col), COUNT(DISTINCT col), SUM(), AVG(), MIN(), MAX(). All ignore NULLs except COUNT(*).
+GROUP BY: Groups rows for subtotals; every non-aggregated column in SELECT must appear in GROUP BY.
+HAVING: Filters after aggregation (whereas WHERE filters rows before aggregation).
+Clause Order: SELECT  FROM  JOIN  WHERE  GROUP BY  HAVING  ORDER BY  LIMIT.
+Scalar Functions (Row-by-Row):
+Conversion: CAST(val AS type), CONVERT(), CONV().
+String: CONCAT_WS(), UPPER()/LOWER(), SUBSTRING(), TRIM(), REPLACE(), REVERSE(), FORMAT(), STRCMP().
+Date: CURDATE(), CURRENT_TIMESTAMP(), DATE(), DATEDIFF(), DATE_ADD(), DATE_SUB(), DATE_FORMAT(), DAYNAME(), QUARTER().
+NULL-Handling: COALESCE() (first non-null), IFNULL(), ISNULL(), NULLIF().
+Math: ABS(), ROUND(), CEILING(), FLOOR(), TRUNCATE(), MOD(), POW(), SQRT(), RAND(), GREATEST(), LEAST().
+Set Operations:
+Stack results of multiple SELECT statements (must have matching column counts and compatible types):
+UNION (combines rows, removes duplicates) / UNION ALL (keeps duplicates).
+INTERSECT (returns common rows; MySQL 8.0.31+).
+EXCEPT (returns rows in first query not in second; MySQL 8.0.31+, MINUS in Oracle).
+Module 4: Using Subqueries, CTEs & Programming Logic
+Subqueries:
+Queries nested inside parentheses within SELECT (must return a single scalar value), FROM/JOIN (creates a derived table), WHERE/HAVING, or INSERT/UPDATE/DELETE.
+Simple vs. Correlated: Simple subqueries run once independently; correlated subqueries reference the outer query and execute once per outer row (slower on large tables).
+IN / NOT IN tests set membership; EXISTS / NOT EXISTS checks whether a subquery returns at least one row.
+Common Table Expressions (CTEs):
+Defined at the top of a query using WITH cte_name AS (SELECT ...) SELECT ... FROM cte_name;.
+Exist only for a single query, can chain multiple comma-separated CTEs, and make complex logic far easier to read than nested subqueries.
+Additional Table Operations:
+CREATE TABLE new AS SELECT ...: Creates and populates a new table from query results.
+INSERT INTO existing SELECT ...: Appends query results into an existing table.
+TRUNCATE TABLE name;: DDL command that rapidly empties a table by dropping/recreating it (blocked by foreign key constraints).
+Query Efficiency & Programming Logic:
+Check execution speed in Workbench's Output panel or inspect execution plans with EXPLAIN SELECT ...; and Visual Explain.
+Variables: Session-scoped user variables use @ (SET @var = 2;).
+Control Flow: CASE WHEN cond THEN val ... ELSE default END transforms column outputs in queries; IF...ELSEIF...ELSE...END IF and loops (LOOP, WHILE, REPEAT) are used in stored programs.
+Module 5: Other Database Features
+Database Indexes:
+Sorted lookup structures storing column values and row disk addresses to enable fast seeks instead of slow full table scans.
+Ideal for columns frequently used in WHERE, JOIN, ORDER BY, and GROUP BY. Avoid indexing small tables or low-cardinality columns (e.g., Gender).
+Trade-offs: Indexes consume disk space, slow down write operations (INSERT/UPDATE/DELETE), and require periodic maintenance against fragmentation.
+Types & Syntax: Clustered index (primary key physical order), secondary/nonclustered index, and FULLTEXT index. Managed via CREATE INDEX name ON table (col); and DROP INDEX name ON table;.
+OLTP vs. OLAP & Ecosystem:
+OLTP (Online Transactional Processing): Highly normalized databases optimized for high-concurrency, real-time daily transactions.
+OLAP (Online Analytical Processing): Denormalized data warehouses optimized for fast analytical querying and batch updates.
+Other tools include SQL Server (SSMS, Azure Data Studio), PostgreSQL, Oracle, and universal clients like DBeaver.
+Week 5: Introduction to Python
+Module 1: Introduction to Python
+Language Basics & Structure:
+High-level, dynamically typed, interpreted language created by Guido van Rossum.
+Indentation is mandatory syntax (defines code blocks instead of curly braces).
+Naming Conventions: snake_case for variables/functions, PascalCase for classes, and ALL_CAPS for constants. Variable names cannot start with numbers or use reserved keywords (if, for, and).
+Comments: Prefixed with #.
+Core Data Types & Errors:
+Primitive Types: str (text), int (whole number), float (decimal), bool (True/False), and None (absence of value). Inspect types with type().
+Reading Tracebacks: Read from the bottom up—the final line states the error type and cause, while lines above pinpoint the file and line number.
+Common Errors: SyntaxError (invalid grammar), IndentationError (misaligned blocks), NameError (undefined variable/typo), TypeError (incompatible types in operation), and ValueError (valid type, invalid content like int('twelve')).
+Tools: VS Code (IDE for .py scripts with extensions and Git integration) and Jupyter Notebook (interactive .ipynb notebooks).
+Module 2: Building Expressions
+Operators & Precedence:
+Arithmetic: +, -, *, / (always returns float), // (floor division, rounds down to int), % (modulo/remainder), and ** (exponentiation).
+Assignment: =, +=, -=, *=, /=, //=, %=.
+Precedence: ()  **  *, /, //, % (left-to-right)  +, - (left-to-right)  assignment operators (right-to-left).
+Math & Rounding:
+Built-in round(num, digits) rounds numbers (drops trailing zeros), whereas format(num, ".2f") returns a fixed-decimal string.
+import math provides math.pi, math.floor(), math.ceil(), and math.trunc().
+f-Strings:
+Standard modern string formatting: f"Total: {price * qty:.2f}" embeds variables, expressions, and format specifiers directly inside {}.
+Module 3: Working with Data Types
+Type Casting & User Input:
+Cast between types with int(), float(), str(), and bool() (int() truncates floats without rounding).
+input("Prompt: ") always returns a str, so numeric inputs must be explicitly cast.
+Truthy/Falsy Values: 0, 0.0, "", [], {}, (), None, and False evaluate to False in bool(); everything else is True.
+String Manipulation:
+Indexing & Slicing: Zero-indexed from left (s[0]), -1 from right (s[-1]). Slices (s[start:stop]) include start and exclude stop. len(s) returns length.
+Methods: .split(delimiter) (returns a list), .strip() (trims leading/trailing whitespace), .upper(), .lower(), and .replace(old, new).
+Collection Data Types:
+List ([]): Ordered, mutable (changeable), allows duplicates. Key methods: .append(), .insert(), .pop(), .remove(), .sort(), .reverse(), plus len(), sorted(), min(), max(), sum(), and in.
+Tuple (()): Ordered, immutable (unchangeable), allows duplicates, slightly faster than lists. Supports unpacking (a, b, *rest = my_tuple, using _ for ignored values).
+Set ({} / set()): Unordered, unindexed, automatically deduplicates values. Supports in, .add(), and .update().
+Dictionary ({key: value}): Ordered, mutable, unique keys. Access safely via .get(key, default) (avoids KeyError), inspect via .keys(), .values(), .items(), and modify/remove via dict[k] = v, .update(), .pop(k), .popitem(), and del.
+Module 4: Conditional Logic & Flow Control
+Conditionals:
+if condition: / elif condition: / else: executes indented blocks based on comparison operators (==, !=, <, <=, >, >=).
+Boolean Precedence: not > and > or.
+match variable: with case value: and wildcard case _: provides pattern-matching.
+Loops:
+for item in iterable: iterates over lists, strings, tuples, or range(). Use enumerate(iterable, start=0) to unpack both index and value.
+while condition: repeats while a condition remains True.
+Loop Control: break exits the loop immediately; continue skips the rest of the current iteration and jumps to the next.
+Week 6: Continuing with Python
+Module 1: Jupyter Notebook
+Notebook Environment & Cells:
+Web application combining live executable code, narrative Markdown, equations, and visualizations (alternatives: JupyterLab, VS Code, Google Colab, Binder).
+Cell Types: Code (executable Python), Markdown (formatted text with # headings, **bold**, *italics*, `code`, [links](url)), and Raw (unexecuted plain text).
+Key Shortcuts: Ctrl+Enter (run cell), Shift+Enter (run and advance), A/B (add cell above/below), M/Y/R (switch to Markdown/Code/Raw), Esc/Enter (command vs. edit mode).
+Module 2: Exploring Functions
+Built-in & Standard Library Modules:
+String & Sequence Built-ins: .find() / .rfind() (returns starting index or -1), .format(), .replace(), and range(start, end, step).
+Importing: import module, import module as alias (np, pd, plt), or from module import item. Install external packages via pip.
+Standard Modules:
+math: fsum(), sqrt(), isqrt(), fabs(), fmod(), floor(), ceil(), trunc(), pi.
+statistics: mean(), median(), mode(), stdev(), variance().
+random: randint(), random(), choice(), choices(), sample(), shuffle().
+datetime: datetime.now(), .year, .strftime("%A").
+Custom Functions & Scope:
+Defined with def func_name(param1, param2='default'): (non-default parameters must come first).
+Call using positional or keyword arguments. Use *args to collect arbitrary positional arguments as a tuple, and **kwargs for arbitrary keyword arguments as a dict.
+return sends a result back to the caller (functions without return return None).
+Variable Scope: Variables created inside a function are local and expire when it finishes; variables outside are global (modifiable inside functions only via the global keyword).
+Lambdas, Comprehensions & Generators:
+Lambda: Small single-expression anonymous function (lambda x, y: x * y), commonly paired with map(func, iter) and filter(func, iter).
+List Comprehension: Concise list creation: [expr for item in iterable if condition].
+Generator Expression: Uses parentheses (expr for item in iterable) to yield items lazily one at a time without storing the full list in memory (ideal inside sum(), max(), min()).
+Generator Function: Uses yield instead of return to pause state and stream large datasets row-by-row with minimal memory.
+Module 3: Classes & Objects
+Object-Oriented Programming (OOP) Basics:
+A class is a blueprint (class SalesRecord:); creating an object from it is instantiation.
+__init__(self, ...) runs automatically on instantiation to initialize instance attributes prefixed with self..
+Methods are functions defined inside a class that take self as their first parameter and operate on instance attributes.
+Inheritance & Encapsulation:
+Child classes (subclasses) inherit attributes and methods from a parent class (superclass): class StoreSalesReport(SalesReport):.
+Call super().__init__(...) inside the child's __init__ to initialize inherited attributes before adding specialized attributes or overriding methods.
+Private Attributes/Methods: Prefixed with a double underscore (self.__roll_attack) to restrict external access.
+Module 4: Files & Exceptions
+File Handling:
+Sequence: Open  Read/Write  Close. Always prefer with open('file.txt', 'r') as f: so Python automatically closes the file.
+Modes: 'r' (read, default), 'w' (write/overwrite), 'a' (append), 'x' (create new, fails if exists), plus 't' (text) or 'b' (binary).
+Reading/Writing: .read(n), .readline(), .readlines(), and .write(). Use the os module (os.remove(), os.rmdir(), os.rename(), os.replace()) to delete or rename files.
+CSV Files: Use import csv with csv.reader(f) and csv.writer(f) (pass newline='' when opening for writing to prevent blank rows on Windows).
+Exception Handling:
+Catch runtime exceptions (ValueError, KeyError, ZeroDivisionError, FileNotFoundError) using try: and except ExceptionType:.
+Optional else: runs only if try succeeded; finally: always runs (used for cleanup).
+Place try-except inside a while loop to re-prompt users on invalid input, or use pass inside except: to ignore an error silently.
+Module 5: Data Analysis Libraries & NumPy Basics
+Core Python Data Ecosystem:
+NumPy (import numpy as np): Fast n-dimensional numerical arrays (ndarray, up to 50x faster than Python lists).
+pandas (import pandas as pd): Tabular data cleaning, manipulation, and analysis using 1D Series and 2D DataFrame objects.
+scikit-learn (from sklearn...): Machine learning (regression, classification, clustering) built on NumPy/pandas following the fit(), predict(), score() workflow.
+Matplotlib (import matplotlib.pyplot as plt): Plotting figures, axes, and charts (Seaborn builds on top of it).
+NumPy Fundamentals:
+Create arrays with np.array([...]); all elements in an ndarray must share the same data type.
+Key Attributes: .ndim (number of dimensions), .shape (tuple of dimension sizes), .size (total elements), .dtype (data type code like int64, float64), and .T (transpose).
+Indexing & Looping: Supports 0-based indexing, slicing, and multi-dimensional indexing (arr_2d[row, col]). Nested for loops iterate from outermost to innermost dimensions.
+Missing Values (None vs. np.nan): Including None forces a numeric array's dtype to object, breaking math operations. Always use np.nan for missing numeric values, and test for it using np.isnan(val) (because np.nan == np.nan evaluates to False).
